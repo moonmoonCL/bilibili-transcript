@@ -1,0 +1,65 @@
+{
+  "name": "bilibili-transcript",
+  "version": "1.0.0",
+  "description": "通过 yt-dlp + Chrome CDP 双重策略获取 B 站视频字幕的工具",
+  "main": "transcript.js",
+  "bin": {
+    "bilibili-transcript": "./transcript.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "start": "node transcript.js",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "bilibili",
+    "subtitle",
+    "transcript",
+    "yt-dlp",
+    "chrome-cdp",
+    "字幕",
+    "B站",
+    "视频字幕",
+    "ai-subtitle"
+  ],
+  "author": "Bilibili Transcript Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/bilibili-transcript.git"
+  },
+  "homepage": "https://github.com/your-username/bilibili-transcript#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/bilibili-transcript/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "files": [
+    "transcript.js",
+    "README.md",
+    "LICENSE",
+    "SKILL.md"
+  ],
+  "dependencies": {
+    "puppeteer-core": "^25.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.2.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+}

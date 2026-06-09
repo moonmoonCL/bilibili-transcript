@@ -1,0 +1,76 @@
+# Dependencies
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build directory
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Optional npm cache
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn
+.yarn-integrity
+yarn.lock
+
+# Bilibili transcript specific
+# 临时字幕文件（由transcript.js生成）
+*.srt
+*.vtt
+*.ass
+*.sub
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/
+build/
+
+# IDE
+*.code-workspace
+.vscode/**
+!*.code-workspace
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
