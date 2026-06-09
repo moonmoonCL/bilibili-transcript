@@ -15,6 +15,7 @@
     "prepare": "husky"
   },
   "keywords": [
+    "pi-package",
     "bilibili",
     "subtitle",
     "transcript",
@@ -39,11 +40,17 @@
     "node": ">=20.0.0"
   },
   "type": "module",
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
   "files": [
     "transcript.js",
     "README.md",
     "LICENSE",
-    "SKILL.md"
+    "SKILL.md",
+    "skills/"
   ],
   "dependencies": {
     "puppeteer-core": "^25.1.0"

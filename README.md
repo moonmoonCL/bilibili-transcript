@@ -32,15 +32,21 @@
 
 ## 快速开始
 
-### 安装技能
+### 安装方式
 
-通过 [skills.sh](https://www.skills.sh/) 安装：
+**方式 1：Pi Packages（推荐）**
+
+```bash
+pi install npm:bilibili-transcript
+```
+
+**方式 2：skills.sh**
 
 ```bash
 npx skills add https://github.com/moonmoonCL/bilibili-transcript
 ```
 
-或使用 npm 全局安装：
+**方式 3：npm 全局安装**
 
 ```bash
 npm install -g bilibili-transcript
