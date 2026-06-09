@@ -9,7 +9,7 @@ Fetch Bilibili video transcripts with dual strategy: yt-dlp (primary) → Chrome
 
 ## Prerequisites
 
-- **Node.js 18+**
+- **Node.js 20+**
 - **yt-dlp**: `brew install yt-dlp` (for primary method)
 - **Chrome** with bilibili login (for fallback method)
 
