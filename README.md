@@ -37,7 +37,7 @@
 通过 [skills.sh](https://www.skills.sh/) 安装：
 
 ```bash
-npx add-skill bilibili-transcript
+npx skills add https://github.com/moonmoonCL/bilibili-transcript
 ```
 
 或使用 npm 全局安装：
