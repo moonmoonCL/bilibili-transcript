@@ -3,7 +3,7 @@ name: bilibili-transcript
 description: Fetch transcripts from Bilibili videos via yt-dlp (primary) or Chrome DevTools Protocol (fallback). Only works for videos with AI subtitles enabled. Use when you need to get subtitles/transcripts from Bilibili videos.
 ---
 
-# Bilibili CDP Transcript
+# Bilibili Transcript
 
 Fetch Bilibili video transcripts with dual strategy: yt-dlp (primary) → Chrome CDP (fallback).
 
