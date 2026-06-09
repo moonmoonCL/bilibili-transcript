@@ -29,17 +29,6 @@ const SUBTITLE_LANG = "ai-zh";
 
 const videoInput = process.argv[2];
 
-if (!videoInput) {
-  console.error("Usage: node transcript.js <bvid-or-url>");
-  console.error("Example: node transcript.js BV13nwdzPEoR");
-  console.error(
-    "Example: node transcript.js https://www.bilibili.com/video/BV13nwdzPEoR"
-  );
-  console.error("");
-  console.error("Strategy: yt-dlp (primary) → Chrome CDP (fallback)");
-  process.exit(1);
-}
-
 function extractBvid(input) {
   const match = input.match(BVID_RE);
   return match ? match[0] : null;
@@ -316,9 +305,32 @@ async function main() {
   console.error(`\nDone. ${result.entries.length} subtitle entries.`);
 }
 
-try {
-  await main();
-} catch (error) {
-  console.error("Error:", error.message);
-  process.exit(1);
+// Export functions for testing
+export { extractBvid, formatTimestamp, parseSrt };
+
+// Only run main when executed directly (not imported)
+const isMainModule =
+  process.argv[1] &&
+  (import.meta.url === `file://${process.argv[1]}` ||
+    import.meta.url === `file://${process.argv[1]}.js` ||
+    import.meta.url.endsWith(process.argv[1]));
+
+if (isMainModule) {
+  if (!videoInput) {
+    console.error("Usage: node transcript.js <bvid-or-url>");
+    console.error("Example: node transcript.js BV13nwdzPEoR");
+    console.error(
+      "Example: node transcript.js https://www.bilibili.com/video/BV13nwdzPEoR"
+    );
+    console.error("");
+    console.error("Strategy: yt-dlp (primary) → Chrome CDP (fallback)");
+    process.exit(1);
+  }
+
+  try {
+    await main();
+  } catch (error) {
+    console.error("Error:", error.message);
+    process.exit(1);
+  }
 }

@@ -7,9 +7,10 @@
     "bilibili-transcript": "./transcript.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "build": "echo \"No build step needed\" && exit 0",
     "start": "node transcript.js",
     "prepare": "husky"
   },
@@ -51,7 +52,8 @@
     "eslint": "^8.56.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
-    "prettier": "^3.2.0"
+    "prettier": "^3.2.0",
+    "vitest": "^4.1.8"
   },
   "lint-staged": {
     "*.js": [
