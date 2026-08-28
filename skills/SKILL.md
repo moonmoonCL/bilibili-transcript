@@ -54,5 +54,5 @@ Timestamped transcript entries:
 
 - yt-dlp may hit 412 errors (Bilibili anti-scraping); CDP fallback handles this
 - CDP fallback requires Chrome running with `--remote-debugging-port=9222`
-- Use `browser-start.js --profile` to start debug Chrome
+- Start Chrome manually with `--remote-debugging-port=9222` and login to bilibili.com
 - See README.md for detailed documentation

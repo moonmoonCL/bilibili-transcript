@@ -26,6 +26,28 @@ import { randomBytes } from "crypto";
 const BVID_RE = /[Bb][Vv][a-zA-Z0-9]{10}/;
 const CDP_URL = "http://localhost:9222";
 const SUBTITLE_LANG = "ai-zh";
+const PLATFORM = process.platform;
+
+function getChromeStartCommand() {
+  if (PLATFORM === "darwin") {
+    const path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+    return {
+      path,
+      example: `"${path}" --remote-debugging-port=9222`,
+    };
+  }
+  if (PLATFORM === "win32") {
+    return {
+      path: "chrome.exe",
+      example: "chrome.exe --remote-debugging-port=9222",
+    };
+  }
+  // linux / others
+  return {
+    path: "google-chrome",
+    example: "google-chrome --remote-debugging-port=9222",
+  };
+}
 
 const videoInput = process.argv[2];
 
@@ -163,8 +185,15 @@ async function fetchViaCdp(bvid) {
       defaultViewport: null,
     });
   } catch (e) {
-    console.error("[CDP] Cannot connect to Chrome on :9222");
-    console.error("[CDP] Start Chrome with: browser-start.js --profile");
+    const { path: chromePath, example } = getChromeStartCommand();
+    console.error(`[CDP] Cannot connect to Chrome on ${CDP_URL}`);
+    console.error(
+      "[CDP] Chrome must be running with remote debugging enabled."
+    );
+    console.error("[CDP] Start Chrome manually:");
+    console.error(`[CDP]   ${example}`);
+    console.error("[CDP] Then login to bilibili.com in that Chrome window.");
+    console.error(`[CDP] (Default path: ${chromePath})`);
     return null;
   }
 
