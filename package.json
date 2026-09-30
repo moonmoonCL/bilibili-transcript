@@ -1,17 +1,17 @@
 {
   "name": "bilibili-transcript",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "通过 yt-dlp + Chrome CDP 双重策略获取 B 站视频字幕的工具",
-  "main": "transcript.js",
+  "main": "skills/transcript.js",
   "bin": {
-    "bilibili-transcript": "./transcript.js"
+    "bilibili-transcript": "./skills/transcript.js"
   },
   "scripts": {
     "test": "vitest run",
     "lint": "eslint .",
     "format": "prettier --write .",
     "build": "echo \"No build step needed\" && exit 0",
-    "start": "node transcript.js",
+    "start": "node skills/transcript.js",
     "prepare": "husky"
   },
   "keywords": [
@@ -46,10 +46,8 @@
     ]
   },
   "files": [
-    "transcript.js",
     "README.md",
     "LICENSE",
-    "SKILL.md",
     "skills/"
   ],
   "dependencies": {

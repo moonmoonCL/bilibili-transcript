@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.0.5] - 2026-09-30
+
+### 修复
+
+- 🐛 将 `transcript.js` 及依赖声明移入 `skills/` 目录，使 skill 自包含（skills.sh 安装后可直接运行）
+- 📝 `SKILL.md` 增加依赖安装步骤（`cd {baseDir} && npm install`）
+- 🔧 同步更新 `main` / `bin` / `start` 脚本及测试引用路径
+
 ## [1.0.0] - 2024-06-09
 
 ### 新增

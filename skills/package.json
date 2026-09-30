@@ -1,0 +1,8 @@
+{
+  "name": "bilibili-transcript-skill",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "puppeteer-core": "^25.1.0"
+  }
+}

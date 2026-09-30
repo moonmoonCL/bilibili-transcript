@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { extractBvid, formatTimestamp, parseSrt } from "./transcript.js";
+import { extractBvid, formatTimestamp, parseSrt } from "./skills/transcript.js";
 
 describe("extractBvid", () => {
   it("should extract BVID from URL", () => {

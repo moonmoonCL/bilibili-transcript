@@ -7,6 +7,14 @@ description: Fetch transcripts from Bilibili videos via yt-dlp (primary) or Chro
 
 Fetch Bilibili video transcripts with dual strategy: yt-dlp (primary) → Chrome CDP (fallback).
 
+## Setup
+
+Install the script dependencies once (required for the Chrome CDP fallback):
+
+```bash
+cd {baseDir} && npm install
+```
+
 ## Prerequisites
 
 - **Node.js 20+**
