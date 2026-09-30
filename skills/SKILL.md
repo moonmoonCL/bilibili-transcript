@@ -18,7 +18,7 @@ cd {baseDir} && npm install
 
 ## Prerequisites
 
-- **Node.js 20+**
+- **Node.js 22+**
 - **yt-dlp**: `brew install yt-dlp` (for primary method)
 - **Chrome** with bilibili login (for fallback method)
 

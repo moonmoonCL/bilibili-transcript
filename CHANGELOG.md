@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.0.9] - 2026-09-30
+
+### 持续集成
+
+- ⬆️ GitHub Actions 升级到 `checkout@v7` / `setup-node@v7`（基于 Node 24），消除 Node 20 弃用警告
+- ✅ 测试矩阵更新为 Node `22.x` / `24.x`，`engines` 同步要求 Node `>=22`
+- 🔧 发布任务显式关闭依赖缓存（`package-manager-cache: false`）并打印 npm 版本便于排查
+
 ## [1.0.8] - 2026-09-30
 
 ### 修复

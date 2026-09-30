@@ -1,6 +1,6 @@
 {
   "name": "bilibili-transcript",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "通过 yt-dlp + Chrome CDP 双重策略获取 B 站视频字幕的工具",
   "main": "skills/transcript.js",
   "bin": {
@@ -37,7 +37,7 @@
     "url": "https://github.com/moonmoonCL/bilibili-transcript/issues"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "type": "module",
   "pi": {
