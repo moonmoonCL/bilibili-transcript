@@ -1,6 +1,6 @@
 # Bilibili Transcript
 
-通过 yt-dlp + Chrome CDP 双重策略获取 B 站视频字幕的工具。
+通过 yt-dlp + Chrome CDP 双重策略获取 B 站视频字幕。既可以作为 **AI 技能（Skill）** 安装给 agent 使用，也可以作为 **命令行工具** 直接运行。
 
 ## 功能
 
@@ -17,7 +17,7 @@
 
 没有 AI 字幕的视频（如纯音乐、纯画面、部分短视频）无法提取文字内容。
 
-## 策略
+## 工作原理
 
 ```
 1. yt-dlp（优先）    ← 快速，不需要浏览器
@@ -27,92 +27,82 @@
 
 | 方法           | 优点                           | 缺点              | 需要的依赖                       |
 | -------------- | ------------------------------ | ----------------- | -------------------------------- |
-| **yt-dlp**     | 快速、简单、不需要 Chrome 运行 | 可能遇到 412 反爬 | 只需 yt-dlp                      |
+| **yt-dlp**     | 快速、简单、不需要 Chrome 运行 | 可能遇到 412 反爬 | yt-dlp                           |
 | **Chrome CDP** | 几乎不会被拦截                 | 需要 Chrome 运行  | yt-dlp + puppeteer-core + Chrome |
-
-> 主方案 yt-dlp **不需要任何 Node 依赖**；只有走 CDP 兜底时才需要 `puppeteer-core`（见下文）。
 
 ## 快速开始
 
-### 安装
+### 第 1 步：准备前置环境
 
-**方式 1：Pi Packages（推荐）**
+| 依赖                     | 是否必须 | 说明                                                                  | 安装                                                    |
+| ------------------------ | -------- | --------------------------------------------------------------------- | ------------------------------------------------------- |
+| **Node.js 22+**          | 必须     | 运行脚本                                                              | [nodejs.org](https://nodejs.org) 或 `brew install node` |
+| **yt-dlp**               | 必须     | 主方案，抓取字幕                                                      | `brew install yt-dlp`                                   |
+| **Chrome + 已登录 B 站** | 必须     | yt-dlp 通过 `--cookies-from-browser chrome` 读取 Cookie               | 用日常 Chrome 登录 <https://www.bilibili.com>           |
+| **Chrome 调试模式**      | 可选     | 仅 CDP 兜底需要，详见 [Chrome CDP 兜底方案](#chrome-cdp-兜底方案可选) | —                                                       |
 
-```bash
-pi install npm:bilibili-transcript
-```
+> `yt-dlp` 其他平台的安装方式见 <https://github.com/yt-dlp/yt-dlp#installation>。
 
-> 会自动安装 Node 依赖（`puppeteer-core`），装完即可使用。
+### 第 2 步：安装
 
-**方式 2：skills.sh**
+**方式 A：作为 AI 技能（给 agent 用）**
 
-```bash
-npx skills add https://github.com/moonmoonCL/bilibili-transcript
-```
+- **Pi Packages**
 
-> skills CLI 只复制技能文件，**不会安装 Node 依赖**。
-> 只用 yt-dlp 主方案的话可以直接用；如果要使用 **Chrome CDP 兜底**，需要执行一次：
+  ```bash
+  pi install npm:bilibili-transcript
+  ```
+
+- **skills.sh**
+
+  ```bash
+  npx skills add https://github.com/moonmoonCL/bilibili-transcript
+  ```
+
+> 技能自带 `transcript.js`，yt-dlp 主方案**零 Node 依赖**，装完即可用。
+> 只有需要使用 **Chrome CDP 兜底** 时，才需要额外装一次依赖：
 >
 > ```bash
 > cd ~/.agents/skills/bilibili-transcript && npm install
 > ```
 
-**方式 3：npm 全局安装**
+**方式 B：作为命令行工具**
 
 ```bash
 npm install -g bilibili-transcript
 ```
 
-> 会自动安装 Node 依赖，并提供全局命令 `bilibili-transcript`。
+> 会连同 Node 依赖一起装好，并注册全局命令 `bilibili-transcript`。
 
-### 1. 安装 yt-dlp（主方案）
+### 第 3 步：使用
 
-```bash
-# macOS
-brew install yt-dlp
-```
+- **技能方式**：直接对 agent 说「获取这个 B 站视频的字幕」即可；手动调用为：
 
-其他平台见 <https://github.com/yt-dlp/yt-dlp#installation>。
+  ```bash
+  node ~/.agents/skills/bilibili-transcript/transcript.js <BVID或URL>
+  ```
 
-### 2. 在 Chrome 中登录 B 站账号
-
-yt-dlp 会通过 `--cookies-from-browser chrome` 读取你**日常使用的 Chrome** 里的 B 站 Cookie，所以请确保：
-
-1. 在 Chrome 浏览器中登录 bilibili.com 账号
-2. 保持浏览器处于登录状态
-
-> 注意：这里用的是普通 Chrome；CDP 兜底用的是「远程调试模式的 Chrome」，两者相互独立，详见下方章节。
-
-### 3. 提取字幕
-
-- 通过 **npm 全局安装**的，直接使用全局命令：
+- **命令行方式**：
 
   ```bash
   bilibili-transcript <BVID或URL>
   ```
 
-- 通过 **Pi Package / skills.sh** 安装的，由 agent 按 `SKILL.md` 里的 `{baseDir}/transcript.js` 调用；手动调用则为：
-
-  ```bash
-  # skills.sh 全局安装后的路径示例
-  node ~/.agents/skills/bilibili-transcript/transcript.js <BVID或URL>
-  ```
-
-示例：
+输入支持 BVID 或完整 URL：
 
 ```bash
-bilibili-transcript BV13nwdXXXXX
-bilibili-transcript https://www.bilibili.com/video/BV13nwdzPXXX/
+bilibili-transcript BV13nwdzPEoR
+bilibili-transcript https://www.bilibili.com/video/BV13nwdzPEoR/
 ```
 
-### 输出
+输出：
 
 ```
-[0:00] XXXXX
-[0:01] XXXXX
-[0:03] XXXXX
-[0:04] XXXXX
-...
+# 视频标题
+
+[0:00] 字幕文本第一行
+[0:15] 字幕文本第二行
+[1:23] 字幕文本第三行
 ```
 
 ## Chrome CDP 兜底方案（可选）
