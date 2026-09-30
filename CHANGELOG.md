@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.0.7] - 2026-09-30
+
+### 持续集成
+
+- 🔐 改用 npm Trusted Publishing（OIDC）发布，不再依赖会过期的 `NPM_TOKEN`，并自动生成 provenance 证明
+- 🚀 发布改由版本 tag（`v*`）触发，避免普通提交因版本未变更而发布失败
+- ✨ 新增 `prettier --check` 格式校验
+
 ## [1.0.6] - 2026-09-30
 
 ### 改进
