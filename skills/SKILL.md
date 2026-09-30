@@ -9,7 +9,8 @@ Fetch Bilibili video transcripts with dual strategy: yt-dlp (primary) → Chrome
 
 ## Setup
 
-Install the script dependencies once (required for the Chrome CDP fallback):
+The primary strategy (yt-dlp) needs no Node dependencies. Install the script
+dependencies once **only if** you need the Chrome CDP fallback:
 
 ```bash
 cd {baseDir} && npm install
@@ -58,9 +59,28 @@ Timestamped transcript entries:
 - Videos without AI subtitles will fail with a clear error message
 - Check availability: `yt-dlp --list-subs <url>` should show `ai-zh`
 
-## Notes
+## Chrome CDP Fallback (optional)
 
-- yt-dlp may hit 412 errors (Bilibili anti-scraping); CDP fallback handles this
-- CDP fallback requires Chrome running with `--remote-debugging-port=9222`
-- Start Chrome manually with `--remote-debugging-port=9222` and login to bilibili.com
-- See README.md for detailed documentation
+Triggered automatically when yt-dlp hits a 412 anti-scraping error. It connects
+to a Chrome instance with remote debugging enabled and captures the subtitle
+request directly. Requires:
+
+1. `puppeteer-core` installed in the skill directory:
+   `cd {baseDir} && npm install`
+2. Chrome running with remote debugging on port 9222, logged into bilibili.com
+
+Start Chrome (quit it completely first, otherwise the flag is ignored):
+
+```bash
+# macOS
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222
+# Linux
+google-chrome --remote-debugging-port=9222
+# Windows
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
+```
+
+Verify the port is open: `curl -s http://localhost:9222/json/version`
+
+Keep that Chrome window open and logged into bilibili.com, then run the skill
+again. See README.md for detailed setup and troubleshooting.

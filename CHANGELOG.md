@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.0.6] - 2026-09-30
+
+### 改进
+
+- ✨ `puppeteer-core` 改为按需加载：主方案 yt-dlp 不再需要任何 Node 依赖，仅 Chrome CDP 兜底时才需要
+- 📝 `README.md` 补充 Chrome CDP 完整使用说明（如何以 `--remote-debugging-port=9222` 启动 Chrome、验证端口、登录 B 站、故障排查）
+- 📝 `README.md` / `SKILL.md` 说明各安装方式的依赖差异（skills.sh 需手动 `npm install`）
+
 ## [1.0.5] - 2026-09-30
 
 ### 修复

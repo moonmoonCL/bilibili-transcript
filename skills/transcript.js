@@ -12,11 +12,11 @@
  *   - Chrome with bilibili cookies (for --cookies-from-browser)
  *
  * Requires for CDP fallback:
+ *   - puppeteer-core (cd <skill-dir> && npm install)
  *   - Chrome running with --remote-debugging-port=9222
  *   - User logged into bilibili.com in that Chrome instance
  */
 
-import puppeteer from "puppeteer-core";
 import { execSync } from "child_process";
 import { readFileSync, unlinkSync, mkdirSync } from "fs";
 import { join } from "path";
@@ -177,6 +177,21 @@ async function fetchViaYtDlp(bvid) {
 // ============================================================
 async function fetchViaCdp(bvid) {
   const videoUrl = `https://www.bilibili.com/video/${bvid}/`;
+
+  // puppeteer-core is only needed for the CDP fallback. Import it lazily so the
+  // primary yt-dlp strategy keeps working without installing any Node dependency.
+  let puppeteer;
+  try {
+    puppeteer = (await import("puppeteer-core")).default;
+  } catch {
+    console.error("[CDP] Missing dependency: puppeteer-core");
+    console.error("[CDP] Install the skill dependencies first:");
+    console.error("[CDP]   cd <skill-dir> && npm install");
+    console.error(
+      "[CDP] (Or install globally: npm install -g bilibili-transcript)"
+    );
+    return null;
+  }
 
   let browser;
   try {
