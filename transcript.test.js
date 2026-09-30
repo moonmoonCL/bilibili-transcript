@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { extractBvid, formatTimestamp, parseSrt } from "./skills/transcript.js";
+import {
+  extractBvid,
+  formatTimestamp,
+  parseSrt,
+  pickSubtitleFile,
+  getChromeStartCommand,
+} from "./skills/transcript.js";
 
 describe("extractBvid", () => {
   it("should extract BVID from URL", () => {
@@ -89,5 +95,37 @@ Another line`;
     const entries = parseSrt(srt);
     expect(entries).toHaveLength(1);
     expect(entries[0].content).toBe("Valid entry");
+  });
+});
+
+describe("pickSubtitleFile", () => {
+  it("should prefer Chinese subtitles over English", () => {
+    const picked = pickSubtitleFile(["Title.en.srt", "Title.zh-Hans.srt"]);
+    expect(picked.file).toBe("Title.zh-Hans.srt");
+    expect(picked.lang).toBe("zh-Hans");
+  });
+
+  it("should prefer human Chinese over AI Chinese", () => {
+    const picked = pickSubtitleFile(["Title.ai-zh.srt", "Title.zh-CN.srt"]);
+    expect(picked.lang).toBe("zh-CN");
+  });
+
+  it("should fall back to any subtitle when language is unknown", () => {
+    const picked = pickSubtitleFile(["Title.ko.srt"]);
+    expect(picked.file).toBe("Title.ko.srt");
+    expect(picked.lang).toBe("ko");
+  });
+
+  it("should handle an empty list", () => {
+    expect(pickSubtitleFile([])).toEqual({ file: null, lang: null });
+  });
+});
+
+describe("getChromeStartCommand", () => {
+  it("should pass --user-data-dir (Chrome 136+ requirement)", () => {
+    const { example, profileDir } = getChromeStartCommand();
+    expect(example).toContain("--remote-debugging-port=9222");
+    expect(example).toContain("--user-data-dir=");
+    expect(example).toContain(profileDir);
   });
 });

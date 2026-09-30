@@ -2,6 +2,20 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.1.0] - 2026-09-30
+
+### 新增
+
+- ✨ 支持中文字幕 / 英文字幕 / AI 字幕（不再写死 `ai-zh`），按 `zh-Hans → zh-CN → zh → zh-TW → ai-zh → en` 优先级自动选择
+- ✨ 新增环境变量：`BILIBILI_SUBTITLE_LANGS`、`BILIBILI_COOKIES_FROM_BROWSER`、`BILIBILI_CDP_URL`、`BILIBILI_YTDLP_TIMEOUT_MS`
+
+### 修复
+
+- 🐛 不再吞掉 yt-dlp 的真实报错：失败时打印原始输出，并区分「412 风控 / Cookie 读取失败 / 无匹配字幕 / 未安装 yt-dlp / 需要登录」
+- 🐛 CDP 兜底必须使用 `--user-data-dir`（Chrome 136+ 默认配置目录会忽略 `--remote-debugging-port`），命令提示、README、SKILL 同步更新
+- 🐛 CDP 抓不到字幕时提示需要登录（`need_login_subtitle`），不再笼统归因于「没有 AI 字幕」
+- 🔧 用 `spawnSync` 替代 `execSync`，超时与未安装场景处理更明确
+
 ## [1.0.10] - 2026-09-30
 
 ### 文档
