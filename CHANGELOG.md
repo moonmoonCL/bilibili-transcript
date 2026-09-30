@@ -2,6 +2,13 @@
 
 本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [1.0.8] - 2026-09-30
+
+### 修复
+
+- 🐛 修复 `npm install -g bilibili-transcript` 的全局命令经 bin 软链调用时静默不执行的问题（`isMainModule` 现在会解析软链）
+- 🔧 `skills/transcript.js` 恢复可执行权限
+
 ## [1.0.7] - 2026-09-30
 
 ### 持续集成

@@ -18,9 +18,10 @@
  */
 
 import { execSync } from "child_process";
-import { readFileSync, unlinkSync, mkdirSync } from "fs";
+import { readFileSync, unlinkSync, mkdirSync, realpathSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { pathToFileURL } from "url";
 import { randomBytes } from "crypto";
 
 const BVID_RE = /[Bb][Vv][a-zA-Z0-9]{10}/;
@@ -352,14 +353,20 @@ async function main() {
 // Export functions for testing
 export { extractBvid, formatTimestamp, parseSrt };
 
-// Only run main when executed directly (not imported)
-const isMainModule =
-  process.argv[1] &&
-  (import.meta.url === `file://${process.argv[1]}` ||
-    import.meta.url === `file://${process.argv[1]}.js` ||
-    import.meta.url.endsWith(process.argv[1]));
+// Only run main when executed directly (not imported). Resolve symlinks so this
+// also works when invoked through the npm bin symlink (`bilibili-transcript`).
+function isMainModule() {
+  if (!process.argv[1]) return false;
+  try {
+    return (
+      import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href
+    );
+  } catch {
+    return false;
+  }
+}
 
-if (isMainModule) {
+if (isMainModule()) {
   if (!videoInput) {
     console.error("Usage: node transcript.js <bvid-or-url>");
     console.error("Example: node transcript.js BV13nwdzPEoR");
